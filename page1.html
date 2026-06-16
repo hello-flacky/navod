@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Make a Wish</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            justify-content: flex-start;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        .wish-container {
+            background: linear-gradient(135deg, rgba(250, 243, 233, 0.95), rgba(245, 235, 222, 0.85));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(138, 35, 35, 0.15);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            max-width: 90vw;
+            width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 15px 40px rgba(74, 53, 37, 0.12), inset 0 2px 8px rgba(255, 255, 255, 0.9);
+            text-align: left;
+            position: relative;
+        }
+
+        .wish-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: #8a2323;
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            text-shadow: 1px 1px 2px rgba(138, 35, 35, 0.1);
+            opacity: 0;
+            animation: slideUpFade 1s ease forwards 0.2s;
+        }
+
+        .wish-paragraph {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            color: var(--text-brown);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+            opacity: 0;
+            animation: slideUpFade 1s ease forwards;
+        }
+
+        /* Sequential Fade In */
+        .p1 { animation-delay: 0.6s; }
+        .p2 { animation-delay: 1.0s; }
+        .p3 { animation-delay: 1.4s; }
+        .p4 { animation-delay: 1.8s; }
+        .p5 { animation-delay: 2.2s; }
+
+        .wish-signoff {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #8a2323;
+            text-align: right;
+            margin-top: 3rem;
+            letter-spacing: 1px;
+            line-height: 1.5;
+            opacity: 0;
+            animation: slideUpFade 1s ease forwards 2.6s;
+        }
+
+        .wish-signoff span {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        .back-btn-container {
+            text-align: center;
+            margin-top: 2rem;
+            opacity: 0;
+            animation: slideUpFade 1s ease forwards 3.0s;
+        }
+
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 500px) {
+            .wish-container {
+                padding: 2rem 1.5rem;
+            }
+            .wish-title {
+                font-size: 2.8rem;
+            }
+            .wish-paragraph {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wish-container">
+        <h1 class="wish-title">Happy Birthday,<br>My Special Someone!!!!!!!!</h1>
+        
+        <p class="wish-paragraph p1">
+            Today is a reminder of how beautiful the world became the day you entered it. 🌟 Even though we are thousands of miles apart, under different skies and in different time zones, my heart beats only for you. ❤️
+        </p>
+
+        <p class="wish-paragraph p2">
+            For nearly two years, I have carried a love for you that words can barely describe. It’s a love that doesn’t ask for anything, doesn’t demand your attention, and doesn’t expect a single thing in return. 🥺 It’s a silent promise from my heart to yours—that no matter where you are, who you are with, or how far away you go, you will always have someone in this world who loves you unconditionally. Your happiness is my happiness, and your smile is my ultimate peace. 😭💖
+        </p>
+
+        <p class="wish-paragraph p3">
+            I might just be someone loving you from a distance, but to me, you are my whole world, my most beautiful thought, and my secret prayer every single night. 💭🙏✨ It hurts sometimes not being able to celebrate this day with you, but my love for you is stronger than any distance between us. 🌍💞
+        </p>
+
+        <p class="wish-paragraph p4">
+            On your birthday, I pray that life gives you the absolute best. May you achieve every dream, conquer every hurdle, and be surrounded by pure joy. Even if I'm not there to hold your hand, I will always be here, silently cheering for you and loving you from afar, just like I always do. ❤️
+        </p>
+
+        <p class="wish-paragraph p5">
+            Happy Birthday, my beautiful favorite. Please always stay happy, and never forget how deeply, selflessly, and truly you are loved by me. Forever and always. ❤️
+        </p>
+
+        <div class="wish-signoff">
+            HAPPY BIRTHDAY NAVODD!!<br>
+            <span>Bashini</span>
+        </div>
+    </div>
+
+    <div class="back-btn-container">
+        <button class="btn btn-yes" onclick="window.location.href='yes.html'">Go Back</button>
+    </div>
+</body>
+</html>

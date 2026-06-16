@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>A Small Gift</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .gift-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100dvh;
+            min-height: -webkit-fill-available;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Typography */
+        .gift-heading {
+            font-family: 'Great Vibes', cursive;
+            margin: 0;
+            background: linear-gradient(to right, #8a2323, #d47559, #8a2323);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 12px rgba(138, 35, 35, 0.25));
+            animation: shine 4s linear infinite;
+            white-space: nowrap;
+        }
+
+        .hb-size { font-size: 4rem; }
+        .name-size { font-size: 5.5rem; }
+
+        @media (max-width: 500px) {
+            .hb-size { font-size: 2.8rem; }
+            .name-size { font-size: 3.5rem; }
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* Animation States */
+        .pos-hidden {
+            opacity: 0;
+            position: absolute;
+            top: 50vh;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .pos-center {
+            opacity: 1;
+            position: absolute;
+            top: 45vh;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.1);
+            transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .pos-top-hb {
+            opacity: 1;
+            position: absolute;
+            top: 5vh;
+            left: 50%;
+            transform: translate(-50%, 0) scale(0.85);
+            transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .pos-top-name {
+            opacity: 1;
+            position: absolute;
+            top: 10vh;
+            left: 50%;
+            transform: translate(-50%, 0) scale(0.7);
+            transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        #confetti {
+            opacity: 0;
+            transition: opacity 3s ease-in;
+        }
+        
+        .show-confetti {
+            opacity: 1 !important;
+        }
+
+        /* Content Container (Subheading & Cards) */
+        .content-container {
+            margin-top: 15vh; /* Reduced gap below Navod */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.5s ease-out;
+            pointer-events: none; /* disable clicks while hidden */
+        }
+
+        .show-content {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .gift-subheading {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 3rem;
+            line-height: 1.5;
+        }
+
+        .tabs-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* Cards Design */
+        @keyframes flipIn3D {
+            0% { opacity: 0; transform: perspective(1000px) rotateX(-60deg) translateY(60px) scale(0.9); }
+            60% { opacity: 1; transform: perspective(1000px) rotateX(10deg) translateY(-5px) scale(1.02); }
+            100% { opacity: 1; transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1); }
+        }
+
+        .tab-card {
+            background: linear-gradient(135deg, rgba(250, 243, 233, 0.95), rgba(245, 235, 222, 0.8));
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(138, 35, 35, 0.15);
+            border-radius: 18px;
+            padding: 1.8rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(74, 53, 37, 0.12), inset 0 2px 5px rgba(255, 255, 255, 0.9);
+            opacity: 0;
+        }
+        
+        .show-content .tab-card {
+            animation: flipIn3D 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+        
+        .show-content .tab-link-wrapper:nth-child(1) .tab-card { animation-delay: 0.2s; }
+        .show-content .tab-link-wrapper:nth-child(2) .tab-card { animation-delay: 0.5s; }
+        .show-content .tab-link-wrapper:nth-child(3) .tab-card { animation-delay: 0.8s; }
+        
+        .tab-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        @media (hover: hover) {
+            .tab-card:hover {
+                transform: perspective(1000px) translateY(-12px) rotateX(5deg) scale(1.02);
+                box-shadow: 0 25px 40px rgba(74, 53, 37, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+            }
+            .tab-card:hover::before {
+                opacity: 1;
+            }
+            .tab-card:hover .tab-title::after {
+                width: 100%;
+                left: 0;
+                background-color: #A52A2A;
+            }
+        }
+
+        .tab-card:active {
+            transform: perspective(1000px) translateY(-2px) scale(0.98);
+        }
+        .tab-card:active::before {
+            opacity: 1;
+        }
+
+        .tab-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-brown);
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+            z-index: 2;
+        }
+
+        .tab-title::after {
+            content: '';
+            position: absolute;
+            width: 30%;
+            height: 2px;
+            bottom: -4px;
+            left: 35%;
+            background-color: var(--text-brown);
+            border-radius: 2px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .tab-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            color: var(--text-brown);
+            line-height: 1.5;
+            z-index: 2;
+            position: relative;
+        }
+
+        .tap-here {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: rgba(138, 35, 35, 0.7);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: pulseText 2s infinite;
+        }
+
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.6; transform: translateX(0); }
+            50% { opacity: 1; transform: translateX(5px); }
+        }
+
+        .go-back-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.8rem 2.5rem;
+            background: transparent;
+            color: var(--text-brown);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 2px solid var(--text-brown);
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .show-content .go-back-btn {
+            animation: simpleFadeUp 1s ease forwards 1.2s;
+        }
+
+        .go-back-btn:hover {
+            background: rgba(74, 53, 37, 0.05);
+            transform: translateY(-2px);
+        }
+
+        @keyframes simpleFadeUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="confetti" class="particles"></canvas>
+    <div class="gift-container">
+        
+        <!-- Animated Headings -->
+        <h1 id="hb-text" class="gift-heading hb-size pos-hidden"></h1>
+        <h1 id="name-text" class="gift-heading name-size pos-hidden"></h1>
+        
+        <!-- Cards Content -->
+        <div id="content" class="content-container">
+            <p class="gift-subheading">Here is a small gift<br>Tap the Tabs below one by one</p>
+            
+            <div class="tabs-container">
+                <a href="page1.html" style="text-decoration: none; color: inherit;" class="tab-link-wrapper">
+                    <div class="tab-card" id="tab1">
+                        <div class="tab-desc">Make a wish<br>From my Heart to yours</div>
+                        <div class="tap-here">Tap here ➔</div>
+                    </div>
+                </a>
+                
+                <a href="page2.html" style="text-decoration: none; color: inherit;" class="tab-link-wrapper">
+                    <div class="tab-card" id="tab2">
+                        <div class="tab-desc">Wrapped with love</div>
+                        <div class="tap-here">Tap here ➔</div>
+                    </div>
+                </a>
+                
+                <a href="page3.html" style="text-decoration: none; color: inherit;" class="tab-link-wrapper">
+                    <div class="tab-card" id="tab3">
+                        <div class="tab-desc">Stuck in my head</div>
+                        <div class="tap-here">Tap here ➔</div>
+                    </div>
+                </a>
+            </div>
+            
+            <a href="index.html" class="go-back-btn">Go Back</a>
+        </div>
+
+    </div>
+    
+    <script>
+        // The Typing & Moving Sequence Animation
+        document.addEventListener('DOMContentLoaded', async () => {
+            const hbEl = document.getElementById('hb-text');
+            const nameEl = document.getElementById('name-text');
+            const content = document.getElementById('content');
+            const confetti = document.getElementById('confetti');
+
+            const text1 = "Happy Birthday";
+            const text2 = "Navod !!! ♥";
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const shouldAnimate = urlParams.get('animate') === 'true';
+
+            // Check if we should skip the animation (e.g. coming back from a slide)
+            if (!shouldAnimate) {
+                // Instantly load the final state
+                hbEl.innerHTML = text1;
+                hbEl.className = 'gift-heading hb-size pos-top-hb';
+                hbEl.style.transition = 'none';
+
+                nameEl.innerHTML = text2;
+                nameEl.className = 'gift-heading name-size pos-top-name';
+                nameEl.style.transition = 'none';
+
+                content.classList.add('show-content');
+                content.style.transition = 'none';
+                
+                confetti.classList.add('show-confetti');
+                confetti.style.transition = 'none';
+                return;
+            }
+
+            // Remove the URL parameter so it doesn't replay if the user manually refreshes the page
+            window.history.replaceState({}, document.title, 'yes.html');
+
+            // 1. Type "Happy Birthday" in the center
+            hbEl.className = 'gift-heading hb-size pos-center type-cursor';
+            for (let i = 0; i < text1.length; i++) {
+                hbEl.innerHTML += text1.charAt(i);
+                await new Promise(r => setTimeout(r, 120)); // typing speed
+            }
+            
+            // Hold for effect
+            await new Promise(r => setTimeout(r, 600)); 
+
+            // 2. Move "Happy Birthday" to top
+            hbEl.classList.remove('type-cursor');
+            hbEl.className = 'gift-heading hb-size pos-top-hb';
+            
+            await new Promise(r => setTimeout(r, 1000)); // wait for glide
+
+            // 3. Type "Navod" in the center
+            nameEl.className = 'gift-heading name-size pos-center type-cursor';
+            for (let i = 0; i < text2.length; i++) {
+                nameEl.innerHTML += text2.charAt(i);
+                await new Promise(r => setTimeout(r, 150)); // typing speed
+            }
+
+            // Hold for effect
+            await new Promise(r => setTimeout(r, 800));
+
+            // 4. Move "Navod" to top under Happy Birthday
+            nameEl.classList.remove('type-cursor');
+            nameEl.className = 'gift-heading name-size pos-top-name';
+
+            await new Promise(r => setTimeout(r, 800)); // wait for glide
+
+            // 5. Fade in the Subheading and Flip in the 3 Tabs
+            content.classList.add('show-content');
+
+            // 6. Fade in the beautiful confetti background
+            confetti.classList.add('show-confetti');
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
+</html>
